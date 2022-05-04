@@ -103,7 +103,7 @@ def checkIfResponseExists(port):
     if len(list(reader)) < 2:
         return False
     else:
-        return Ture
+        return True
 
 s = socket.socket()
 host = socket.gethostname()
