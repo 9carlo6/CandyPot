@@ -104,7 +104,7 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
 
     check_exploit = False
     for exp in exploit_list:
-        if str(exp[1]) in requests_message:
+        if str(exp[1]) in request_message:
             check_exploit = True
 
     # In base all'ordine della risposta nella sessione si assegna uno score
@@ -116,11 +116,11 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
         current_score = df.loc[df["ID"] == str(last_response_id), "SCORE"].values[0]
         current_score = float(current_score)
         print("Response " + str(last_response_id) + " current score: " + str(current_score))
-        if len(session_list) == 1 and current_score <= 0.92:
+        if len(response_session_list) == 1 and current_score <= 0.92:
             current_score = current_score + 0.08
-        elif len(session_list) == 2 and current_score <= 0.97:
+        elif len(response_session_list) == 2 and current_score <= 0.97:
             current_score = current_score + 0.03
-        elif len(session_list) == 3 and current_score <= 0.99:
+        elif len(response_session_list) == 3 and current_score <= 0.99:
             current_score = current_score + 0.01
 
         # Se è stato trovato del codice malevolo nella richiesta precedente allora si aumenta di + 0.2

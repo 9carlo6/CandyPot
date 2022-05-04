@@ -6,7 +6,7 @@ import pandas as pd
 from datetime import datetime
 import sys
 import time
-from IoTLearner import updateResponseScore
+from IoTLearner import negativeUpdateResponseScore, positiveUpdateResponseScore
 
 def storeData(obj, filename):
     pickleFile = open(filename, 'wb')
@@ -106,9 +106,10 @@ def addSession(ses_id, addr, req_id, res_id, port):
 def checkIfResponseExists(port):
     f = open(r'port_' + str(port) + '_response.csv', 'r', newline='\n')
     reader = csv.reader(f)
+    res_lis = list(reader)
     f.close()
     #rimozione del primo elemento (header) dalla lista
-    if len(list(reader)) < 2:
+    if len(res_lis) < 2:
         return False
     else:
         return True
