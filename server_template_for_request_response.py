@@ -4,6 +4,7 @@ import pickle
 import csv
 import pandas as pd
 from datetime import datetime
+import sys
 
 def storeData(obj, filename):
     pickleFile = open(filename, 'wb')
@@ -105,9 +106,12 @@ def checkIfResponseExists(port):
     else:
         return True
 
+
+
 s = socket.socket()
 host = socket.gethostname()
-port = int(input("Enter port number:"))
+port = int(sys.argv[1])
+#port = int(input("Enter port number:"))
 s.bind(('', port))
 
 # request_set = set()
@@ -116,7 +120,7 @@ request_set = loadData('port_' + str(port) + '.dat')
 login_cgi = loadData('response_from_iot.dat')
 
 s.listen(5)
-print("Server started:")
+print("Server started for port " + str(port) + ":")
 random_response = True
 try:
     while True:
