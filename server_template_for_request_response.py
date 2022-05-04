@@ -5,6 +5,8 @@ import csv
 import pandas as pd
 from datetime import datetime
 import sys
+import time
+from IoTLearner import updateResponseScore
 
 def storeData(obj, filename):
     pickleFile = open(filename, 'wb')
@@ -79,6 +81,7 @@ def selectResponse(res):
     #rimozione del primo elemento (header) dalla lista
     res_lis = list(reader)
     res_lis.pop(0)
+    f.close()
 
     for r in res_lis:
         if str(r[0]) == str(res):
@@ -87,12 +90,15 @@ def selectResponse(res):
     return None
 
 # Per aggiungere una sessione indicando la richiesta e risposta
-def addSession(addr, req, res):
+def addSession(ses_id, addr, req_id, res_id, port):
     rows_number = len(pd.read_csv('sessions.csv')) + 1
     f = open(r'sessions.csv', 'a', newline='\n')
     writer = csv.writer(f)
     now = datetime.now()
-    row = ['S' + str(rows_number), addr, req, res, now]
+    if ses_id is not None:
+        row = [ses_id, addr, req_id, res_id, now, "open", str(port)]
+    else:
+        row = ['S' + str(rows_number), addr, req_id, res_id, now, "open", str(port)]
     writer.writerow(row)
     f.close()
 
@@ -100,39 +106,91 @@ def addSession(addr, req, res):
 def checkIfResponseExists(port):
     f = open(r'port_' + str(port) + '_response.csv', 'r', newline='\n')
     reader = csv.reader(f)
+    f.close()
     #rimozione del primo elemento (header) dalla lista
     if len(list(reader)) < 2:
         return False
     else:
         return True
 
+# Per controllare c'è bisogno di avviare una nuova sessione
+# Se la sessione è già avviata ritorna il numero di sessione
+def checkIfNewSession(addr):
+    f = open(r'sessions.csv', 'r', newline='\n')
+    reader = csv.reader(f)
+    session_list = list(reader)
+    session_list.pop(0)
+    f.close()
 
+    last_time = None
+    ses_id = None
+    # Controllo temporale
+    # Si parte dalla fine della lista delle sessioni per cercare l'ultima richiesta fatta dall'attaccante
+    for s in reversed(session_list):
+        if str(addr[0]) in str(s[1]):
+            last_time = datetime.strptime(str(s[4]), '%Y-%m-%d %H:%M:%S.%f')
+            ses_id = str(s[0])
+            break
+
+    check = True
+    now = datetime.now()
+    if (now - last_time).total_seconds() >= 80:
+        print("Last session from this address was on: " + str(s[4]))
+        ses_id = None
+    elif (now - last_time).total_seconds() < 80:
+        print("There is already a session with this address started "
+              + str((now - last_time).total_seconds()) + " seconds ago")
+        check = False
+    else:
+        print("This address has never started a session")
+
+    return check, ses_id
+
+# Per aggiornare lo score relativo alle risposte
+"""
+def updateResponseScore(port):
+    session_file = 'sessions.csv'
+    sf = pd.read_csv(file)
+    sf["SessionID"]
+
+    response_file = ('port_' + str(port) + '_response.csv')
+
+    return None
+"""
+
+
+#port = int(sys.argv[1])
+port = int(input("Enter port number:"))
 
 s = socket.socket()
 host = socket.gethostname()
-port = int(sys.argv[1])
-#port = int(input("Enter port number:"))
 s.bind(('', port))
+s.listen(5)
 
-# request_set = set()
 request_set = loadData('port_' + str(port) + '.dat')
-
 login_cgi = loadData('response_from_iot.dat')
 
-s.listen(5)
 print("Server started for port " + str(port) + ":")
 random_response = True
 try:
     while True:
         c, addr = s.accept()
         print('Got connection from', addr)
-        msg_recived = c.recv(16384)
-        # print(msg_recived)
+
+        # Per capire se è stata avviata una nuova sessione con questo indirizzo
+        check_session, ses_id = checkIfNewSession(addr)
+
+        msg_recived = c.recv(20000)
         print('REQUEST:')
         print(repr(msg_recived))
         request_set.add(msg_recived)
-        req = addRequest(port, addr, msg_recived)
-        res = None
+        # Per aggiungere la richiesta al dataset (ritorna l'id della richiesta)
+        req_id = addRequest(port, addr, msg_recived)
+        res_id = None
+
+        # Per aggiornare positivamente le risposte precedenti
+        if not check_session:
+            positiveUpdateResponseScore(ses_id, req_id, port)
 
         # Per controllare se l'attaccante ha già effettuato una richiesta uguale
         # DA MODIFICARE (vengono utilizzate due funzioni, bisogna rendere il codice più pulito)
@@ -147,7 +205,7 @@ try:
             print('RESPONSE:')
             r = randomChoiseResponse(port)
             print(r)
-            res = r[0]
+            res_id = r[0]
             if "b'" in r[2]:
                 filtered_response = r[2].split("b'")[1].split("'")[0]
                 c.send(filtered_response.encode("utf-8"))
@@ -159,7 +217,7 @@ try:
             print('The Attacker already send the same request to us')
             print('RESPONSE:')
             r = selectResponse(checkIfAttackerAlredyExists(addr, msg_recived))
-            res = checkIfAttackerAlredyExists(addr, msg_recived)
+            res_id = checkIfAttackerAlredyExists(addr, msg_recived)
             print(r)
             if "b'" in r:
                 filtered_response = r.split("b'")[1].split("'")[0]
@@ -176,10 +234,13 @@ try:
             print('Thank you for connecting')
             c.send(b'Thank you for connecting')
 
-        addSession(addr, req, res)
+        # Per aggiungere una nuova sessione o aggiornare una sessione esistente
+        addSession(ses_id, addr, req_id, res_id, port)
         print('End of Connection')
         print()
         c.close()
+
+        negativeUpdateResponseScore(port)
 
 except KeyboardInterrupt:
     print("Program interrupted, storing data and exiting.")

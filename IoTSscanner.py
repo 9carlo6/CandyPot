@@ -115,7 +115,7 @@ def addResponse(port, addr, value):
     writer = csv.writer(f)
     now = datetime.now()
     res_id = 'RES_' + str(rows_number) + '_P' + str(port)
-    row = [res_id, addr, value, now]
+    row = [res_id, addr, value, now, 0.5]
     writer.writerow(row)
     f.close()
     return res_id

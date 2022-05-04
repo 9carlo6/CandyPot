@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="" />
+    <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/IoTLearner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exploit_code.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/port_8081_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IoTScannerTable.csv" beforeDir="false" afterPath="$PROJECT_DIR$/IoTScannerTable.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IoTSscanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/IoTSscanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_443_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_443_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_7547_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_7547_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_8080_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_8080_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_80_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_80_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_81_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_81_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_82_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_82_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_88_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_88_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port_9999_response.csv" beforeDir="false" afterPath="$PROJECT_DIR$/port_9999_response.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_template_for_request_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_template_for_request_response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sessions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sessions.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="28grsvREG3tWJvQvE644X5EhYVT" />
   <component name="ProjectViewState">
@@ -20,6 +48,111 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pcarl\Desktop\Tesi Magistrale\CandyPot" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.server_template_for_request_response">
+    <configuration name="IoTLearner" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pcarl\PycharmProjects\CandyPot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IoTLearner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="IoTSscanner" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pcarl\PycharmProjects\CandyPot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IoTSscanner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pcarl\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="server_template_for_request_response" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pcarl\PycharmProjects\CandyPot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server_template_for_request_response.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.server_template_for_request_response" />
+      <item itemvalue="Python.IoTLearner" />
+      <item itemvalue="Python.IoTSscanner" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.server_template_for_request_response" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.IoTSscanner" />
+        <item itemvalue="Python.IoTLearner" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -28,7 +161,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1651649279288</updated>
+      <workItem from="1651653045848" duration="29000" />
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
