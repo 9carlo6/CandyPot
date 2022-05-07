@@ -1,0 +1,20 @@
+ID,ADDR,VALUE,TIME
+REQ_1_P81,,b'',2022-05-02 23:13:09.839256
+REQ_2_P81,,"b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nUser-Agent: python-requests/2.21.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'",2022-05-02 23:13:09.839256
+REQ_3_P81,,"b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nConnection: keep-alive\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-US,en-IN;q=0.9,en;q=0.8\r\n\r\n'",2022-05-02 23:13:09.839256
+REQ_4_P81,,"b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nUser-Agent: \r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_5_P81,,"b'GET /%5ccgi-bin/get_status.cgi HTTP/1.1\r\nConnection: Keep-Alive\r\nAccept-Encoding: gzip\r\nAccept-Language: zh-CN,en,*\r\nUser-Agent: Mozilla/5.0\r\nHost: 3.14.69.228:81\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_6_P81,,b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nAccept-Encoding: identity\r\n\r\n',2022-05-02 23:13:09.840255
+REQ_7_P81,,b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nAccept-Encoding: identity\r\nConnection: keep-alive\r\n\r\n',2022-05-02 23:13:09.840255
+REQ_8_P81,,"b'GET /manager/html HTTP/1.1\r\nAccept: text/html, application/xhtml+xml, */*\r\nUser-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)\r\nHost: 3.14.69.228:81\r\nAuthorization: Basic Og==\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_9_P81,,"b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nConnection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-US,en-IN;q=0.9,en;q=0.8\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_10_P81,,"b'GET /login.cgi HTTP/1.1\r\nHost: 3.14.69.228:81\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_11_P81,,b'GET / HTTP/1.1\r\nHost: 3.14.69.228:81\r\nUser-Agent: HTTP Banner Detection (https://security.ipip.net)\r\nConnection: close\r\n\r\n',2022-05-02 23:13:09.840255
+REQ_12_P81,,b'GET / HTTP/1.1\r\nHost: 3.14.69.228:81\r\nUser-Agent: Mozilla/5.0 (compatible; Nimbostratus-Bot/v1.3.2; http://cloudsystemnetworks.com)\r\n\r\n',2022-05-02 23:13:09.840255
+REQ_13_P81,,"b'GET /%5ccgi-bin/login.cgi HTTP/1.1\r\nConnection: Keep-Alive\r\nAccept-Encoding: gzip\r\nAccept-Language: zh-CN,en,*\r\nUser-Agent: Mozilla/5.0\r\nHost: 3.14.69.228:81\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_14_P81,,"b'GET / HTTP/1.1\r\nHost: 3.14.69.228:81\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: deflate, gzip, identity\r\nAccept-Language: en-US;q=0.6,en;q=0.4\r\nUser-Agent: Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1\r\n\r\n'",2022-05-02 23:13:09.840255
+REQ_15_P81,,b'GET login.cgi HTTP/1.1\r\n\r\n',2022-05-02 23:13:09.840255
+REQ_16_P81,"('137.184.71.144', 35306)",b'GET login.cgi HTTP/1.1\r\n\r\n',2022-05-03 21:55:56.277763
+REQ_17_P81,"('188.166.59.99', 49090)",b'GET login.cgi HTTP/1.1\r\n\r\n',2022-05-03 22:26:13.001258
+REQ_18_P81,"('107.182.128.55', 41440)",b'GET login.cgi HTTP/1.1\r\n\r\n',2022-05-03 22:27:45.363318
+REQ_19_P81,"('192.241.223.44', 60640)",b'MGLNDD_54.80.75.64_81\n',2022-05-03 22:49:52.048274

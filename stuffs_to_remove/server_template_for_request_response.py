@@ -169,7 +169,7 @@ s.bind(('', port))
 s.listen(5)
 
 request_set = loadData('port_' + str(port) + '.dat')
-login_cgi = loadData('stuffs_to_remove/response_from_iot.dat')
+login_cgi = loadData('response_from_iot.dat')
 
 print("Server started for port " + str(port) + ":")
 random_response = True

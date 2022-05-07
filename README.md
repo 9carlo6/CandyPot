@@ -1,4 +1,4 @@
-# Intelligent-IoT-Honeypot
+# CandyPot
 
 An Intelligent Honeypot for Heterogeneous IoT Devices using Reinforcement Learning
 

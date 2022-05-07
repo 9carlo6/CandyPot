@@ -9,85 +9,9 @@ import time
 from iot_learner import *
 from data_handler import *
 import struct
-from Pcap import *
+from pcap_converter import *
 
-# Per controllare l'esistenza dell'attaccante corrente nella lista delle sessioni
-# In caso positivo ritorna la richiesta effettuata dall'attaccante
-def checkIfAttackerAlredyExists(addr, value):
-    f = open(r'sessions.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    # rimozione del primo elemento (header) dalla lista
-    session_list = list(reader)
-    session_list.pop(0)
-    f.close()
 
-    for s in session_list:
-        if str(addr[0]) in s[1]:
-            if checkIfRequestFromAttackerAlreadyExists(addr, value) is not None:
-                return s[3]
-    return None
-
-# Per controllare l'esistenza della richiesta corrente nella lista delle richieste
-# In caso affermativo ritorna l'id della richiesta
-def checkIfRequestFromAttackerAlreadyExists(addr, value):
-    f = open(r'port_' + str(port) + '_requests.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    # rimozione del primo elemento (header) dalla lista
-    request_list = list(reader)
-    request_list.pop(0)
-    f.close()
-    req = None
-    for r in request_list:
-        if str(addr[0]) in r[1] and str(value) in r[2]:
-            req = r[0]
-    return req
-
-# Per controllare l'esistenza di almeno una risposta per la porta di interesse
-def checkIfResponseExists(port):
-    f = open(r'port_' + str(port) + '_response.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    res_lis = list(reader)
-    f.close()
-    #rimozione del primo elemento (header) dalla lista
-    if len(res_lis) < 2:
-        return False
-    else:
-        return True
-
-# Per controllare c'è bisogno di avviare una nuova sessione
-# Se la sessione è già avviata ritorna il numero di sessione
-def checkIfNewSession(addr):
-    f = open(r'sessions.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    session_list = list(reader)
-    session_list.pop(0)
-    f.close()
-
-    last_time = None
-    ses_id = None
-    # Controllo temporale
-    # Si parte dalla fine della lista delle sessioni per cercare l'ultima richiesta fatta dall'attaccante
-    for s in reversed(session_list):
-        if str(addr[0]) in str(s[1]):
-            last_time = datetime.strptime(str(s[4]), '%Y-%m-%d %H:%M:%S.%f')
-            ses_id = str(s[0])
-            break
-
-    check = True
-    now = datetime.now()
-    if (now - last_time).total_seconds() >= 80:
-        print("Last session from this address was on: " + str(s[4]))
-        ses_id = None
-    elif (now - last_time).total_seconds() < 80:
-        print("There is already a session with this address started "
-              + str((now - last_time).total_seconds()) + " seconds ago")
-        check = False
-    else:
-        print("This address has never started a session")
-
-    return check, ses_id
-
-# Per aggiornare lo score relativo alle risposte
 """
 def updateResponseScore(port):
     session_file = 'sessions.csv'
@@ -99,10 +23,8 @@ def updateResponseScore(port):
     return None
 """
 
-
 #port = int(sys.argv[1])
 port = int(input("Enter port number:"))
-
 
 s = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_IP)
 #s.bind((raw_input("[+] YOUR_INTERFACE : "),0))
@@ -115,7 +37,7 @@ s.bind(('', port))
 #s.listen(5)
 
 request_set = loadData('port_' + str(port) + '.dat')
-login_cgi = loadData('response_from_iot.dat')
+login_cgi = loadData('stuffs_to_remove/response_from_iot.dat')
 
 print("Server started for port " + str(port) + ":")
 random_response = True
@@ -125,7 +47,7 @@ try:
         #print('Got connection from', addr)
 
         # Per capire se è stata avviata una nuova sessione con questo indirizzo
-        #check_session, ses_id = checkIfNewSession(addr)
+        #check_session, ses_id = checkOpenSession(addr)
 
         # Create Object
         p = Pcap('temp.pcap')
@@ -155,10 +77,11 @@ try:
         # Per controllare se l'attaccante ha già effettuato una richiesta uguale
         # DA MODIFICARE (vengono utilizzate due funzioni, bisogna rendere il codice più pulito)
         already_answered = False
-        if loadResponse(port, checkIfAttackerAlredyExists(addr, msg_recived)) is not None:
+        if loadResponse(port, checkAttackerExistence(port, addr)) is not None:
             already_answered = True
 
-        response_exists = checkIfResponseExists(port)
+        # To check if responses list for this port is empty
+        response_exists = checkResponsesExistence(port)
 
         # Caso in cui si decide di dare una risposta scelta casualemente
         if random_response and response_exists and not already_answered:
@@ -176,8 +99,8 @@ try:
         elif already_answered and response_exists:
             print('The Attacker already send the same request to us')
             print('RESPONSE:')
-            r = loadResponse(port, checkIfAttackerAlredyExists(addr, msg_recived))
-            res_id = checkIfAttackerAlredyExists(addr, msg_recived)
+            r = loadResponse(port, checkAttackerExistence(port, addr))
+            res_id = checkAttackerExistence(port, addr)
             print(r)
             if "b'" in r:
                 filtered_response = r.split("b'")[1].split("'")[0]
