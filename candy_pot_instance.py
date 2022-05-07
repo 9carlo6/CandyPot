@@ -6,30 +6,10 @@ import pandas as pd
 from datetime import datetime
 import sys
 import time
-from IoTLearner import negativeUpdateResponseScore, positiveUpdateResponseScore
-
-def storeData(obj, filename):
-    pickleFile = open(filename, 'wb')
-    pickle.dump(obj, pickleFile)
-    pickleFile.close()
-
-def loadData(filename):
-    pickleFile = open(filename, 'rb')
-    obj = pickle.load(pickleFile)
-    pickleFile.close()
-    return obj
-
-# Per aggiungere la richiesta al file relativo alla porta specifica
-def addRequest(port, addr, value):
-    rows_number = len(pd.read_csv('port_' + str(port) + '_requests.csv')) + 1
-    f = open(r'port_' + str(port) + '_requests.csv', 'a', newline='\n')
-    writer = csv.writer(f)
-    now = datetime.now()
-    req_id = 'REQ_' + str(rows_number) + '_P' + str(port)
-    row = [req_id, addr, value, now]
-    writer.writerow(row)
-    f.close()
-    return req_id
+from iot_learner import *
+from data_handler import *
+import struct
+from Pcap import *
 
 # Per controllare l'esistenza dell'attaccante corrente nella lista delle sessioni
 # In caso positivo ritorna la richiesta effettuata dall'attaccante
@@ -56,51 +36,11 @@ def checkIfRequestFromAttackerAlreadyExists(addr, value):
     request_list = list(reader)
     request_list.pop(0)
     f.close()
-
     req = None
     for r in request_list:
         if str(addr[0]) in r[1] and str(value) in r[2]:
             req = r[0]
     return req
-
-# Per scegliere randomicamente la risposta da dare in caso di richiesta
-def randomChoiseResponse(port):
-    f = open(r'port_' + str(port) + '_response.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    #rimozione del primo elemento (header) dalla lista
-    res_lis = list(reader)
-    res_lis.pop(0)
-    res_id = random.choice(res_lis)
-    f.close()
-    return res_id
-
-# Per scegliere una risposta specifica
-def selectResponse(res):
-    f = open(r'port_' + str(port) + '_response.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    #rimozione del primo elemento (header) dalla lista
-    res_lis = list(reader)
-    res_lis.pop(0)
-    f.close()
-
-    for r in res_lis:
-        if str(r[0]) == str(res):
-            return r[2]
-
-    return None
-
-# Per aggiungere una sessione indicando la richiesta e risposta
-def addSession(ses_id, addr, req_id, res_id, port):
-    rows_number = len(pd.read_csv('sessions.csv')) + 1
-    f = open(r'sessions.csv', 'a', newline='\n')
-    writer = csv.writer(f)
-    now = datetime.now()
-    if ses_id is not None:
-        row = [ses_id, addr, req_id, res_id, now, "open", str(port)]
-    else:
-        row = ['S' + str(rows_number), addr, req_id, res_id, now, "open", str(port)]
-    writer.writerow(row)
-    f.close()
 
 # Per controllare l'esistenza di almeno una risposta per la porta di interesse
 def checkIfResponseExists(port):
@@ -163,10 +103,16 @@ def updateResponseScore(port):
 #port = int(sys.argv[1])
 port = int(input("Enter port number:"))
 
-s = socket.socket()
-host = socket.gethostname()
+
+s = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_IP)
+#s.bind((raw_input("[+] YOUR_INTERFACE : "),0))
+s.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
+s.ioctl(socket.SIO_RCVALL,socket.RCVALL_ON)
+#s.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
+#s = socket.socket()
+#host = socket.gethostname()
 s.bind(('', port))
-s.listen(5)
+#s.listen(5)
 
 request_set = loadData('port_' + str(port) + '.dat')
 login_cgi = loadData('response_from_iot.dat')
@@ -175,18 +121,31 @@ print("Server started for port " + str(port) + ":")
 random_response = True
 try:
     while True:
-        c, addr = s.accept()
-        print('Got connection from', addr)
+        #c, addr = s.accept()
+        #print('Got connection from', addr)
 
         # Per capire se è stata avviata una nuova sessione con questo indirizzo
-        check_session, ses_id = checkIfNewSession(addr)
+        #check_session, ses_id = checkIfNewSession(addr)
 
-        msg_recived = c.recv(20000)
+        # Create Object
+        p = Pcap('temp.pcap')
+        pkt = s.recvfrom(65565)
+        print(pkt)
+        print(pkt[1][0])
+        p.write(pkt[0])
+        # flush data
+        p.pcap_file.flush()
+        # close file
+        p.close()
+
+        msg_recived = s.recv(20000)
+        print(msg_recived)
+        break
         print('REQUEST:')
         print(repr(msg_recived))
         request_set.add(msg_recived)
         # Per aggiungere la richiesta al dataset (ritorna l'id della richiesta)
-        req_id = addRequest(port, addr, msg_recived)
+        req_id = storeRequest(port, addr, msg_recived)
         res_id = None
 
         # Per aggiornare positivamente le risposte precedenti
@@ -196,7 +155,7 @@ try:
         # Per controllare se l'attaccante ha già effettuato una richiesta uguale
         # DA MODIFICARE (vengono utilizzate due funzioni, bisogna rendere il codice più pulito)
         already_answered = False
-        if selectResponse(checkIfAttackerAlredyExists(addr, msg_recived)) is not None:
+        if loadResponse(port, checkIfAttackerAlredyExists(addr, msg_recived)) is not None:
             already_answered = True
 
         response_exists = checkIfResponseExists(port)
@@ -204,7 +163,7 @@ try:
         # Caso in cui si decide di dare una risposta scelta casualemente
         if random_response and response_exists and not already_answered:
             print('RESPONSE:')
-            r = randomChoiseResponse(port)
+            r = loadRandomResponse(port)
             print(r)
             res_id = r[0]
             if "b'" in r[2]:
@@ -217,7 +176,7 @@ try:
         elif already_answered and response_exists:
             print('The Attacker already send the same request to us')
             print('RESPONSE:')
-            r = selectResponse(checkIfAttackerAlredyExists(addr, msg_recived))
+            r = loadResponse(port, checkIfAttackerAlredyExists(addr, msg_recived))
             res_id = checkIfAttackerAlredyExists(addr, msg_recived)
             print(r)
             if "b'" in r:
@@ -236,7 +195,7 @@ try:
             c.send(b'Thank you for connecting')
 
         # Per aggiungere una nuova sessione o aggiornare una sessione esistente
-        addSession(ses_id, addr, req_id, res_id, port)
+        storeSession(ses_id, addr, req_id, res_id, port)
         print('End of Connection')
         print()
         c.close()
