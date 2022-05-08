@@ -11,8 +11,8 @@ from data_handler import *
 import subprocess as sub
 import struct
 
-#port = int(sys.argv[1])
-port = int(input("Enter port number:"))
+port = int(sys.argv[1])
+#port = int(input("Enter port number:"))
 
 #s = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_IP)
 #s.bind((raw_input("[+] YOUR_INTERFACE : "),0))
@@ -31,8 +31,8 @@ random_response = True
 try:
     while True:
         req_id = newRequestID(port)
-        #pcap_path = "home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
-        #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", "/home/CandyPot/requests/eccolo.pcap", "-Z", "root", "-c", "1"), stdout=sub.PIPE)
+        pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
+        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
         # output = p.stdout.read()
         # print(output)
 
