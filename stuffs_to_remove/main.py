@@ -6,6 +6,10 @@ from scapy.all import *
 
 
 
+
+
+
+"""
 def test(pkt):
     #print(pkt)
     wrpcap("temp2.cap",pkt)
@@ -21,6 +25,8 @@ print(rdpcap("temp2.cap"))
 
 sniff(filter="port 80", prn=lambda x: x.sprintf("%IP.src%:%TCP.sport% -> %IP.dst%:%TCP.dport%  %2s,TCP.flags% : %TCP.payload%"))
 
+
+"""
 
 """
 def positiveUpdateResponseScore(ses_id, req_id, port):

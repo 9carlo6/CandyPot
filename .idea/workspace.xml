@@ -5,65 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/CandyPot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/candy_pot_instance.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pcap_converter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_443_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_7547_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_8081_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_80_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_81_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_82_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_88_sessions.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sessions/port_9999_sessions.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Huawei_router_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IoTLearner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IoTScannerTable.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IoTSscanner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TR069_protocolDevice_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_web_server_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/collect_response_from_iot.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/collect_response_from_iot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_response_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/create_response_csv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hikvision_camera_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/iot_ip_addr_collector.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ips_checked.dat" beforeDir="false" afterPath="$PROJECT_DIR$/addresses/ips_checked.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kangle_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lighttpd_protocolDevice_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/netgear_router_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_443.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_443_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_443_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_7547.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_7547_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_7547_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_80.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8080.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8080_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8080_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8081.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8081_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_8081_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_80_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_80_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_81.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_81_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_81_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_82.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_82_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_82_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_88.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_88_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_88_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_9999.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_9999_requests.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port_9999_response.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/print_requests.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/print_requests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/print_response_from_iot.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/print_response_from_iot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/response_from_iot.dat" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/response_from_iot.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/send_request_to_all_iot.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/send_request_to_all_iot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_template_for_request_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/server_template_for_request_response.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sessions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sonicWall_firewall_addr.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tplink_router_addr.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/candy_pot_instance.py" beforeDir="false" afterPath="$PROJECT_DIR$/candy_pot_instance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iot_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_learner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iot_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_scanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcap_converter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requests/port_80_requests.csv" beforeDir="false" afterPath="$PROJECT_DIR$/requests/port_80_requests.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scans/iot_scanner_table.csv" beforeDir="false" afterPath="$PROJECT_DIR$/scans/iot_scanner_table.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stuffs_to_remove/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +43,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="28grsvREG3tWJvQvE644X5EhYVT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -104,7 +66,7 @@
       <recent name="C:\Users\pcarl\Desktop\Tesi Magistrale\CandyPot\addresses" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.iot_ip_collector">
+  <component name="RunManager" selected="Python.candy_pot_instance">
     <configuration name="IoTSscanner" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -118,6 +80,27 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IoTSscanner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="candy_pot_instance" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CandyPot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/candy_pot_instance.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -210,42 +193,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="server_template_for_request_response" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\pcarl\PycharmProjects\CandyPot\venv\Scripts\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="C:\Users\pcarl\Desktop\Tesi Magistrale\CandyPot\stuffs_to_remove\server_template_for_request_response.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.server_template_for_request_response" />
       <item itemvalue="Python.IoTSscanner" />
+      <item itemvalue="Python.iot_ip_collector" />
       <item itemvalue="Python.iot_scanner" />
       <item itemvalue="Python.print_response_from_iot" />
-      <item itemvalue="Python.iot_ip_collector" />
+      <item itemvalue="Python.candy_pot_instance" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.candy_pot_instance" />
+        <item itemvalue="Python.iot_scanner" />
         <item itemvalue="Python.iot_ip_collector" />
         <item itemvalue="Python.print_response_from_iot" />
-        <item itemvalue="Python.iot_scanner" />
         <item itemvalue="Python.IoTSscanner" />
-        <item itemvalue="Python.server_template_for_request_response" />
       </list>
     </recent_temporary>
   </component>

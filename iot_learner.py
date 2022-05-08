@@ -1,101 +1,104 @@
 import csv
 import pandas as pd
 from datetime import datetime
+from data_handler import *
 
+NEGATIVE_RESPONSE_SCORE = 0.2
+EXPLOIT_DETECTED_SCORE = 0.5
+SESSION_TIME = 180
+FIRST_RESPONSE_SCORE = 0.08
+SECOND_RESPONSE_SCORE = 0.03
+THIRD_RESPONSE_SCORE = 0.01
+SCORE_LIMIT = 1
+
+# Negative update
 def negativeUpdateResponseScore(port):
-    f = open(r'sessions.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    session_list = list(reader)
-    session_list.pop(0)
-    f.close()
+    session_list = loadSessionList(port)
 
-    # seleziona l'id delle sessioni ancora aperte relative alla specifica porta
+    # Select all session id of the session still open to validate
     open_sessions_to_validate = []
-    checked_session_list = []
+    session_id_list_to_validate = []
     long_sessions_list = []
     now = datetime.now()
     for s in session_list:
-        if str(s[6]) == str(port) and str(s[5]) == "open":
+        if str(s[5]) == "open":
             last_time = datetime.strptime(str(s[4]), '%Y-%m-%d %H:%M:%S.%f')
-            if (now - last_time).total_seconds() >= 180:
+            if (now - last_time).total_seconds() >= SESSION_TIME:
                 open_sessions_to_validate.append(s)
-                if str(s[0]) in checked_session_list:
+                session_id_list_to_validate.append(str(s[0]))
+                if str(s[0]) in session_id_list_to_validate:
                     long_sessions_list.append(str(s[0]))
-                checked_session_list.append(str(s[0]))
 
-    # seleziona l'id delle sessioni che hanno un solo scambio di messaggi
-    short_sessions_list = set(checked_session_list)
+    # Select all session id of the session that have only one exchange of messages
+    short_sessions_list = set(session_id_list_to_validate)
     for s in set(long_sessions_list):
         short_sessions_list.remove(s)
 
-
-    # seleziona l'id delle risposte alle quali bisogna ridurre lo score
+    # Select all response ids to be negatively updated
     negative_response_list = []
     for s in session_list:
         if str(s[0]) in short_sessions_list:
             negative_response_list.append(str(s[3]))
 
-    # Riduce lo score delle risposte selezionate
-    df = pd.read_csv('port_' + str(port) + '_response.csv')
+    # Negative responses update
+    res_path = filePathCreation(str(port), "res")
+    df = pd.read_csv(res_path)
     for nr in set(negative_response_list):
         try:
             # print(df.loc[df["ID"] == str(nr), "SCORE"])
             current_score = df.loc[df["ID"] == nr, "SCORE"].values[0]
             print("Response " + str(nr) + " current score: " + str(current_score))
             current_score = float(current_score)
-            if (current_score - 0.2) <= 0.0:
+            if (current_score - NEGATIVE_RESPONSE_SCORE) <= 0.0:
                 current_score = 0.0
             else:
-                current_score = current_score - 0.2
+                current_score = current_score - NEGATIVE_RESPONSE_SCORE
             df.loc[df["ID"] == nr, "SCORE"] = current_score
             print("Response " + str(nr) + " new score: " + str(current_score))
 
         except:
             print("Exception with response: " + str(nr))
             #df.loc[df["ID"] == nr, "SCORE"] = 0.5
-    df.to_csv('port_' + str(port) + '_response.csv', index=False)
+    df.to_csv(res_path, index=False)
 
-
-    # Chiudere le sessioni aperte che sono state controllate
-    df = pd.read_csv('sessions.csv')
-    for s in set(checked_session_list):
+    # Close open sessions that have been checked
+    ses_path = filePathCreation(str(port), "ses")
+    df = pd.read_csv(ses_path)
+    for s in set(session_id_list_to_validate):
         df.loc[df["SessionID"] == s, "STATUS"] = "closed"
         df.loc[df["SessionID"] == s, "PORT"] = str(int(port))
 
     for s in session_list:
         if str(s[6]) == str(port):
             df.loc[df["SessionID"] == str(s[0]), "PORT"] = str(int(port))
-    df.to_csv('sessions.csv', index=False)
+    df.to_csv(ses_path, index=False)
 
-
+# Positive update
 def positiveUpdateResponseScore(ses_id, req_id, port):
-    f = open(r'sessions.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    session_list = list(reader)
-    session_list.pop(0)
-    f.close()
+    session_list = loadSessionList(port)
 
     response_session_list = []
     for s in session_list:
         if str(s[0]) == ses_id:
             response_session_list.append(str(s[3]))
 
-    # Per prendere l'ultima risposta della sessione corrente
+    # To get the last response of the current session
     last_response_id = response_session_list[-1]
 
-    # In base alla richiesta arrivata si assegna uno score alla risposta
-    # Bisogna controllare se nella richiesta c'è del codice malevolo
-    f = open(r'port_' + str(port) + '_requests.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    requests_list = list(reader)
-    requests_list.pop(0)
-    f.close()
+    # Based on the request received, a score is assigned to the response
+    # 1 - Check for malicious code in the request
+    # 2 - A score is assigned based on the order of the response in the session
+
+    # 1 --------------------------------------------------------------
+    requests_list = loadRequestList(port)
 
     request_message = ""
     for r in requests_list:
         if str(r[0]) == req_id:
             request_message = str(r[2])
 
+    # CODICE DA MODIFICARE
+    # BISOGNA CONTROLLARE TRAMITE UN IDS
     f = open(r'exploit_code.csv', 'r', newline='\n')
     reader = csv.reader(f)
     exploit_list = list(reader)
@@ -107,26 +110,24 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
         if str(exp[1]) in request_message:
             check_exploit = True
 
-    # In base all'ordine della risposta nella sessione si assegna uno score
-    # Prima risposta della sessione + 0.08
-    # Seconda risposta della sessione + 0.03
-    # Terza risposta della sessione + 0.01
-    df = pd.read_csv('port_' + str(port) + '_response.csv')
+    # 2 --------------------------------------------------------------
+    res_path = filePathCreation(str(port), "res")
+    df = pd.read_csv(res_path)
     try:
         current_score = df.loc[df["ID"] == str(last_response_id), "SCORE"].values[0]
         current_score = float(current_score)
         print("Response " + str(last_response_id) + " current score: " + str(current_score))
-        if len(response_session_list) == 1 and current_score <= 0.92:
-            current_score = current_score + 0.08
-        elif len(response_session_list) == 2 and current_score <= 0.97:
-            current_score = current_score + 0.03
-        elif len(response_session_list) == 3 and current_score <= 0.99:
-            current_score = current_score + 0.01
+        if len(response_session_list) == 1 and current_score <= SCORE_LIMIT - FIRST_RESPONSE_SCORE:
+            current_score = current_score + FIRST_RESPONSE_SCORE
+        elif len(response_session_list) == 2 and current_score <= SCORE_LIMIT - SECOND_RESPONSE_SCORE:
+            current_score = current_score + SECOND_RESPONSE_SCORE
+        elif len(response_session_list) == 3 and current_score <= SCORE_LIMIT - THIRD_RESPONSE_SCORE:
+            current_score = current_score + THIRD_RESPONSE_SCORE
 
-        # Se è stato trovato del codice malevolo nella richiesta precedente allora si aumenta di + 0.2
+        # If malicious code was found in the previous request then its score is increased
         if check_exploit:
-            current_score = current_score + 0.2
+            current_score = current_score + EXPLOIT_DETECTED_SCORE
         print("Response " + str(last_response_id) + " new score: " + str(current_score))
     except:
         print("Exception with response: " + str(last_response_id))
-    df.to_csv('port_' + str(port) + '_response.csv', index=False)
+    df.to_csv(res_path, index=False)

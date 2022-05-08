@@ -80,7 +80,7 @@ def scanSelectedPort(port, device_ip_list):
     for i in device_ip_list:
         for r in port_request_list:
             req_id = str(r[0])
-            # If a scan has already been performed
+            # If not a scan has already been performed
             if not checkScan(str(i), req_id, port):
                 try:
                     filtered_str = reqFilter(r[2])
@@ -92,7 +92,9 @@ def scanSelectedPort(port, device_ip_list):
 
                     # If Response is empty
                     if response != None:
-                        res_id = storeResponse(port, str(i), response.content)
+                        res_id, check_response = checkResponseValueExistence(port, response.content)
+                        if not check_response:
+                            res_id = storeResponse(port, str(i), response.content)
                         storeScan(str(i), req_id, res_id, port, "True")
 
                 except:

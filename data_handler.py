@@ -4,6 +4,7 @@ import pickle
 import csv
 import pandas as pd
 from datetime import datetime
+import requests
 import sys
 
 # DATA HANDLE:
@@ -58,20 +59,28 @@ def loadRequestList(port):
         sys.exit(1)
 
 # To store a request
-def storeRequest(port, addr, value):
+def storeRequest(port, req_id, addr, value):
     try:
         req_path = filePathCreation(str(port), "req")
-        rows_number = len(pd.read_csv(req_path)) + 1
         f = open(req_path, 'a', newline='\n')
         writer = csv.writer(f)
         now = datetime.now()
-        req_id = 'REQ_' + str(rows_number) + '_P' + str(port)
         row = [req_id, addr, value, now]
         writer.writerow(row)
         f.close()
         return req_id
     except:
         print("Exception with store a request: port=" + str(port) + ", addr=" + str(addr))
+        sys.exit(1)
+
+def newRequestID(port):
+    try:
+        req_path = filePathCreation(str(port), "req")
+        rows_number = len(pd.read_csv(req_path)) + 1
+        req_id = 'REQ_' + str(rows_number) + '_P' + str(port)
+        return req_id
+    except:
+        print("Exception with generate new request id: port=" + str(port))
         sys.exit(1)
 
 # To check the existence of the current request in the requests list
@@ -158,6 +167,27 @@ def checkResponsesExistence(port):
         print("Exception with check if responses list for this port is empty: port=" + str(port))
         sys.exit(1)
 
+# To check the existence of the current value of response in the response list
+def checkResponseValueExistence(port, value):
+    try:
+        res_path = filePathCreation(str(port), "res")
+        f = open(res_path, 'r', newline='\n')
+        reader = csv.reader(f)
+        res_lis = list(reader)
+        res_lis.pop(0)
+        f.close()
+        check = False
+        res_id = None
+        for r in res_lis:
+            if str(value) == r[2]:
+                res_id = r[0]
+                check = True
+                break
+        return res_id, check
+    except:
+        print("Exception with check if the value of the response already existst: port=" + str(port))
+        sys.exit(1)
+
 # 4 - SESSIONS ------------------------------------------------------------------------------
 # To store a session
 def storeSession(ses_id, addr, req_id, res_id, port):
@@ -177,11 +207,25 @@ def storeSession(ses_id, addr, req_id, res_id, port):
         print("Exception with store a session: port=" + str(port))
         sys.exit(1)
 
+# To load the session list
+def loadSessionList(port):
+    try:
+        ses_path = filePathCreation(str(port), "ses")
+        f = open(ses_path, 'r', newline='\n')
+        reader = csv.reader(f)
+        ses_lis = list(reader)
+        ses_lis.pop(0)
+        f.close()
+        return ses_lis
+    except:
+        print("Exception with load session list: port=" + str(port))
+        sys.exit(1)
+
 # To check the existence of the current attacker in the sessions list
 def checkAttackerExistence(port, addr):
     try:
         ses_path = filePathCreation(str(port), "ses")
-        f = open(ses_path, 'a', newline='\n')
+        f = open(ses_path, 'r', newline='\n')
         reader = csv.reader(f)
         session_list = list(reader)
         session_list.pop(0)
@@ -215,10 +259,10 @@ def checkOpenSession(port, addr):
 
     check = False
     now = datetime.now()
-    if (now - last_time).total_seconds() >= SESSION_DURATION:
+    if last_time is not None and (now - last_time).total_seconds() >= SESSION_DURATION:
         print("Last session from this address was on: " + str(s[4]))
         ses_id = None
-    elif (now - last_time).total_seconds() < SESSION_DURATION:
+    elif last_time is not None and (now - last_time).total_seconds() < SESSION_DURATION:
         print("There is already a session with this address started "
               + str((now - last_time).total_seconds()) + " seconds ago")
         check = True
