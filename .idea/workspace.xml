@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sessions/port_443_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_7547_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_8081_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_80_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_81_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_82_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_88_sessions.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sessions/port_9999_sessions.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/candy_pot_instance.py" beforeDir="false" afterPath="$PROJECT_DIR$/candy_pot_instance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iot_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_learner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/iot_scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_scanner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pcap_converter.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/requests/port_80_requests.csv" beforeDir="false" afterPath="$PROJECT_DIR$/requests/port_80_requests.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scans/iot_scanner_table.csv" beforeDir="false" afterPath="$PROJECT_DIR$/scans/iot_scanner_table.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuffs_to_remove/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuffs_to_remove/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
