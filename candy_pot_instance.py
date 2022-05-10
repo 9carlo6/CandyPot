@@ -24,8 +24,8 @@ try:
     while True:
         req_id = newRequestID(port)
         pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
-        #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
-        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"))
+        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
+        #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"))
 
         c, addr = s.accept()
         print('\n----------Got connection from', addr)

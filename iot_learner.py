@@ -28,14 +28,14 @@ def negativeUpdateResponseScore(port):
             if (now - last_time).total_seconds() >= SESSION_TIME:
                 open_sessions_to_validate.append(s)
                 session_id_list_to_validate.append(str(s[0]))
-                if str(s[0]) in session_id_list_to_validate:
+                if session_id_list_to_validate.count(str(s[0]))>1:
                     long_sessions_list.append(str(s[0]))
 
     # Select all session id of the session that have only one exchange of messages
     short_sessions_list = set(session_id_list_to_validate)
     for s in set(long_sessions_list):
         short_sessions_list.remove(s)
-
+   
     # Select all response ids to be negatively updated
     negative_response_list = []
     for s in session_list:
