@@ -2,6 +2,7 @@ import csv
 import pandas as pd
 from datetime import datetime
 from data_handler import *
+import subprocess as sub
 
 NEGATIVE_RESPONSE_SCORE = 0.2
 EXPLOIT_DETECTED_SCORE = 0.5
@@ -73,6 +74,20 @@ def negativeUpdateResponseScore(port):
             df.loc[df["SessionID"] == str(s[0]), "PORT"] = str(int(port))
     df.to_csv(ses_path, index=False)
 
+# Snort alerts check
+def checkSnortAlerts(port, req_id):
+    snort_conf_path = ("/etc/snort/snort.conf")
+    pcap_path = ("/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
+    p = sub.Popen(("sudo", "snort", "-c", str(snort_conf_path), "-A", "console", "-q", "-r", str(pcap_path)),
+                  stdout=sub.PIPE)
+    alerts_check = False
+    for alert in p.stdout:
+        alerts_check = True
+        print("****************Alerts Found*********************")
+
+    return alerts_check
+
+
 # Positive update
 def positiveUpdateResponseScore(ses_id, req_id, port):
     session_list = loadSessionList(port)
@@ -109,6 +124,9 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
     for exp in exploit_list:
         if str(exp[1]) in request_message:
             check_exploit = True
+
+    # Check Snort Alert in pcap file
+    checkSnortAlerts(port, req_id)
 
     # 2 --------------------------------------------------------------
     res_path = filePathCreation(str(port), "res")

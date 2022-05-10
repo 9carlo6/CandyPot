@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requests/port_80_requests.csv" beforeDir="false" afterPath="$PROJECT_DIR$/requests/port_80_requests.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sessions/port_8080_sessions.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/iot_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_learner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,12 +178,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.IoTSscanner" />
+      <item itemvalue="Python.candy_pot_instance" />
       <item itemvalue="Python.iot_ip_collector" />
       <item itemvalue="Python.iot_scanner" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.print_response_from_iot" />
-      <item itemvalue="Python.candy_pot_instance" />
     </list>
     <recent_temporary>
       <list>
