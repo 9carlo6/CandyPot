@@ -25,17 +25,17 @@ try:
         req_id = newRequestID(port)
         pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
         #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
-        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
+        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"))
 
         c, addr = s.accept()
-        print('Got connection from', addr)
+        print('\n----------Got connection from', addr)
 
         # To find out if a new session has been started with this address
         check_session, ses_id = checkOpenSession(port, addr)
 
         # To collect de request and print it
         msg_recived = c.recv(65565)
-        print(msg_recived)
+        #print(msg_recived)
         print('REQUEST:')
         print(repr(msg_recived))
 
@@ -82,7 +82,7 @@ try:
 
         # To add a new session or update an existing session
         storeSession(ses_id, addr, req_id, res_id, port)
-        print('End of Connection')
+        print('----------End of Connection')
         print()
         c.close()
 
