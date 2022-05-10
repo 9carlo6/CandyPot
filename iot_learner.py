@@ -150,6 +150,8 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
         # If malicious code was found in the previous request then its score is increased
         if check_exploit or alert_check:
             current_score = current_score + EXPLOIT_DETECTED_SCORE
+
+        df.loc[df["ID"] == nr, "SCORE"] = current_score
         print("Response " + str(last_response_id) + " new score: " + str(current_score))
     except:
         print("Exception with response: " + str(last_response_id))
