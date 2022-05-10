@@ -76,6 +76,7 @@ def negativeUpdateResponseScore(port):
 
 # Snort alerts check
 def checkSnortAlerts(port, req_id):
+    print("\nPROVA")
     snort_conf_path = ("/etc/snort/snort.conf")
     pcap_path = ("/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
     p = sub.Popen(("sudo", "snort", "-c", str(snort_conf_path), "-A", "console", "-q", "-r", str(pcap_path)),
@@ -84,7 +85,7 @@ def checkSnortAlerts(port, req_id):
     for alert in p.stdout:
         alerts_check = True
         print("****************Alerts Found*********************")
-
+    print("FINE PROVA\n")
     return alerts_check
 
 
