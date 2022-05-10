@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e17fac06-473e-42a9-99eb-4b636f9d6373" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/candy_pot_instance.py" beforeDir="false" afterPath="$PROJECT_DIR$/candy_pot_instance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/iot_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/iot_learner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

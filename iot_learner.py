@@ -78,25 +78,30 @@ def negativeUpdateResponseScore(port):
 # Snort alerts check
 def checkSnortAlerts(port, req_id):
     time.sleep(1)
-    print("\nPROVA")
-    try:
-        f = open("requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
-        print("WEEEEEEEEEEEE")
-    except IOError:
-        print("File not accessible")
-    finally:
-        f.close()
     snort_conf_path = ("/etc/snort/snort.conf")
     pcap_path = ("/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
     p = sub.Popen(("sudo", "snort", "-c", str(snort_conf_path), "-A", "console", "-q", "-r", str(pcap_path)),
                   stdout=sub.PIPE)
-    alerts_check = False
+    alert_check = False
     for alert in p.stdout:
-        alerts_check = True
-        print("****************Alerts Found*********************")
-    print("FINE PROVA\n")
-    return alerts_check
+        alert_check = True
+        print("**************** Alert Found *********************")
+    return alert_check
 
+# Altrernative alerts check
+def checkTextAlerts(request_message):
+    f = open(r'exploit_code.csv', 'r', newline='\n')
+    reader = csv.reader(f)
+    exploit_list = list(reader)
+    exploit_list.pop(0)
+    f.close()
+
+    check_exploit = False
+    for exp in exploit_list:
+        if str(exp[1]) in request_message:
+            check_exploit = True
+
+    return check_exploit
 
 # Positive update
 def positiveUpdateResponseScore(ses_id, req_id, port):
@@ -122,21 +127,11 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
         if str(r[0]) == req_id:
             request_message = str(r[2])
 
-    # CODICE DA MODIFICARE
-    # BISOGNA CONTROLLARE TRAMITE UN IDS
-    f = open(r'exploit_code.csv', 'r', newline='\n')
-    reader = csv.reader(f)
-    exploit_list = list(reader)
-    exploit_list.pop(0)
-    f.close()
-
-    check_exploit = False
-    for exp in exploit_list:
-        if str(exp[1]) in request_message:
-            check_exploit = True
+    # Check if there is something malicious in the request
+    check_exploit = checkTextAlerts(request_message)
 
     # Check Snort Alert in pcap file
-    checkSnortAlerts(port, req_id)
+    alert_check = checkSnortAlerts(port, req_id)
 
     # 2 --------------------------------------------------------------
     res_path = filePathCreation(str(port), "res")
@@ -153,7 +148,7 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
             current_score = current_score + THIRD_RESPONSE_SCORE
 
         # If malicious code was found in the previous request then its score is increased
-        if check_exploit:
+        if check_exploit or alert_check:
             current_score = current_score + EXPLOIT_DETECTED_SCORE
         print("Response " + str(last_response_id) + " new score: " + str(current_score))
     except:

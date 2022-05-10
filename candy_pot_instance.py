@@ -12,15 +12,7 @@ import subprocess as sub
 import struct
 
 port = int(sys.argv[1])
-#port = int(input("Enter port number:"))
-
-#s = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_IP)
-#s.bind((raw_input("[+] YOUR_INTERFACE : "),0))
-#s.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
-#s.ioctl(socket.SIO_RCVALL,socket.RCVALL_ON)
-#s.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
 s = socket.socket()
-#host = socket.gethostname()
 s.bind(('', port))
 s.listen(5)
 
@@ -32,20 +24,16 @@ try:
     while True:
         req_id = newRequestID(port)
         pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
-        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
-        # output = p.stdout.read()
-        # print(output)
+        #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
+        p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
 
         c, addr = s.accept()
         print('Got connection from', addr)
 
-        # Per capire se è stata avviata una nuova sessione con questo indirizzo
+        # To find out if a new session has been started with this address
         check_session, ses_id = checkOpenSession(port, addr)
 
-        #pkt = s.recvfrom(65565)
-        #print(pkt)
-        #print(pkt[1][0])
-
+        # To collect de request and print it
         msg_recived = c.recv(65565)
         print(msg_recived)
         print('REQUEST:')
@@ -53,27 +41,22 @@ try:
 
         request_set.add(msg_recived)
 
-        # Per aggiungere la richiesta al dataset
+        # To add the request to the dataset
         storeRequest(port, req_id, addr, msg_recived)
         res_id = None
 
-        # Per aggiornare positivamente le risposte precedenti
+        # To positively update previous answers
         if check_session:
             positiveUpdateResponseScore(ses_id, req_id, port)
 
-        # Per controllare se l'attaccante ha già effettuato una richiesta uguale
-        # DA MODIFICARE (vengono utilizzate due funzioni, bisogna rendere il codice più pulito)
-        #already_answered = False
-        #if loadResponse(port, checkAttackerExistence(port, addr)) is not None:
-        #    already_answered = True
-
+        # To check if the attacker is already in the dataset of this port
         if checkAttackerExistence(port, addr):
             print("This Attacker already send us a request")
 
         # To check if responses list for this port is empty
         response_exists = checkResponsesExistence(port)
 
-        # Caso in cui si decide di dare una risposta scelta casualemente
+        # Random response
         if random_response and response_exists:
             print('RESPONSE:')
             r = loadRandomResponse(port)
@@ -85,25 +68,25 @@ try:
             else:
                 c.send(r[2].encode("utf-8"))
 
-        # Caso in cui l'attaccante ha già effettuato una richiesta uguale
+        # If the attacker has already made an equal request
         elif response_exists and not random_response:
             print('Not implemented')
         elif not response_exists:
             print('No answers have been collected yet')
             c.send(b'404')
 
-        # Caso in cui si utilizza un approccio basato sul machine learning per scegliere la risposta
-        # (Ancora da implementare)
+        # Q-Learning approach
         else:
             print('Thank you for connecting')
             c.send(b'Thank you for connecting')
 
-        # Per aggiungere una nuova sessione o aggiornare una sessione esistente
+        # To add a new session or update an existing session
         storeSession(ses_id, addr, req_id, res_id, port)
         print('End of Connection')
         print()
         c.close()
 
+        # To negatively update previous answers
         negativeUpdateResponseScore(port)
 
 except KeyboardInterrupt:
