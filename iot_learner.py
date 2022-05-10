@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 from data_handler import *
 import subprocess as sub
+import time
 
 NEGATIVE_RESPONSE_SCORE = 0.2
 EXPLOIT_DETECTED_SCORE = 0.5
@@ -76,7 +77,15 @@ def negativeUpdateResponseScore(port):
 
 # Snort alerts check
 def checkSnortAlerts(port, req_id):
+    time.sleep(1)
     print("\nPROVA")
+    try:
+        f = open("requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
+        print("WEEEEEEEEEEEE")
+    except IOError:
+        print("File not accessible")
+    finally:
+        f.close()
     snort_conf_path = ("/etc/snort/snort.conf")
     pcap_path = ("/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
     p = sub.Popen(("sudo", "snort", "-c", str(snort_conf_path), "-A", "console", "-q", "-r", str(pcap_path)),
