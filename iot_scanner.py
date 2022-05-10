@@ -2,7 +2,6 @@ import socket
 import random
 import pickle
 import csv
-import pandas as pd
 from datetime import datetime
 import requests
 import sys
