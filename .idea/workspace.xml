@@ -178,11 +178,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.IoTSscanner" />
       <item itemvalue="Python.candy_pot_instance" />
       <item itemvalue="Python.iot_ip_collector" />
       <item itemvalue="Python.iot_scanner" />
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.print_response_from_iot" />
     </list>
     <recent_temporary>
