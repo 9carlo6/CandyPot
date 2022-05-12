@@ -137,22 +137,32 @@ def positiveUpdateResponseScore(ses_id, req_id, port):
     res_path = filePathCreation(str(port), "res")
     df = pd.read_csv(res_path)
     try:
+        changes_check = False
         current_score = df.loc[df["ID"] == str(last_response_id), "SCORE"].values[0]
         current_score = float(current_score)
-        print("Response " + str(last_response_id) + " current score: " + str(current_score))
+        initial_score = current_score
         if len(response_session_list) == 1 and current_score <= SCORE_LIMIT - FIRST_RESPONSE_SCORE:
             current_score = current_score + FIRST_RESPONSE_SCORE
+            changes_check = True
         elif len(response_session_list) == 2 and current_score <= SCORE_LIMIT - SECOND_RESPONSE_SCORE:
             current_score = current_score + SECOND_RESPONSE_SCORE
+            changes_check = True
         elif len(response_session_list) == 3 and current_score <= SCORE_LIMIT - THIRD_RESPONSE_SCORE:
             current_score = current_score + THIRD_RESPONSE_SCORE
+            changes_check = True
 
         # If malicious code was found in the previous request then its score is increased
         if check_exploit or alert_check:
             current_score = current_score + EXPLOIT_DETECTED_SCORE
+            changes_check = True
 
         df.loc[df["ID"] == str(last_response_id), "SCORE"] = current_score
-        print("Response " + str(last_response_id) + " new score: " + str(current_score))
+
+        if changes_check:
+            print('----------Positive score update - port ' + str(port) + '----------')
+            print("Response " + str(last_response_id) + " current score: " + str(initial_score))
+            print("Response " + str(last_response_id) + " new score: " + str(current_score))
+            print('----------End of positive score update - port ' + str(port) + '----------')
     except:
         print("Exception with response: " + str(last_response_id))
     df.to_csv(res_path, index=False)
