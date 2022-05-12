@@ -133,8 +133,26 @@ tplink_router_addr = loadData("addresses/tplink_router_addr.dat")
 app_web_server_addr = loadData("addresses/app_web_server_addr.dat")
 
 
+def store_all_data():
+    storeData(ips_checked, "addresses/ips_checked.dat")
+    storeData(hikvision_camera_addr, "addresses/hikvision_camera_addr.dat")
+    storeData(sonicWall_firewall_addr, "addresses/sonicWall_firewall_addr.dat")
+    storeData(netgear_router_addr, "addresses/netgear_router_addr.dat")
+    storeData(TR069_protocolDevice_addr, "addresses/TR069_protocolDevice_addr.dat")
+    storeData(lighttpd_protocolDevice_addr, "addresses/lighttpd_protocolDevice_addr.dat")
+    storeData(Huawei_router_addr, "addresses/Huawei_router_addr.dat")
+    storeData(kangle_addr, "addresses/kangle_addr.dat")
+    storeData(tplink_router_addr, "addresses/tplink_router_addr.dat")
+    storeData(app_web_server_addr, "addresses/app_web_server_addr.dat")
+
+store_counter = 99
 try:
     while True:
+        store_counter = store_counter + 1
+        print("Round number: " + str(store_counter))
+        if store_counter % 100 == 0:
+            print("Data Storing...")
+            store_all_data()
         ip_addr = generate_rand_ip()
         if ip_addr not in ips_checked:
             ips_checked.add(ip_addr)
@@ -242,3 +260,4 @@ for i in app_web_server_addr:
     port_dict[i.split(':')[1]] += 1
 
 print(port_dict)
+

@@ -76,3 +76,7 @@ REQ_74_P8080,"('157.245.203.107', 52756)",b'GET /login?from=%2F HTTP/1.1\r\nHost
 REQ_75_P8080,"('192.241.216.96', 33978)",b'',2022-05-11 12:08:22.302867
 REQ_76_P8080,"('188.165.87.108', 58021)","b'GET /favicon.ico HTTP/1.1\r\nHost: 54.91.30.20:8080\r\nConnection: close\r\nUser-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\n\r\n'",2022-05-11 12:36:23.749125
 REQ_77_P8080,"('137.184.37.199', 42814)","b'GET /manager/html HTTP/1.1\nHost: \nConnection: close\nUser_Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\n\n\n'",2022-05-11 12:36:24.090609
+REQ_78_P8080,"('137.184.37.199', 43936)","b'GET /manager/html HTTP/1.1\nHost: \nConnection: close\nUser_Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\n\n\n'",2022-05-11 22:59:53.238245
+REQ_79_P8080,"('191.5.91.15', 41706)",b'GET / HTTP/1.1\r\n\r\n',2022-05-11 23:13:47.184800
+REQ_80_P8080,"('45.61.185.106', 43222)","b'GET /manager/html HTTP/1.1\nHost: \nConnection: close\nUser_Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\n\n\n'",2022-05-11 23:57:11.401027
+REQ_81_P8080,"('45.148.10.81', 37784)",b'\x04\x01\x00Ph\x12sa\x00',2022-05-12 00:26:38.250577
