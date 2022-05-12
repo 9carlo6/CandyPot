@@ -50,12 +50,11 @@ def portSelection(port):
         sys.exit(1)
 
 def createCandyPot(port):
+    interrupt = False
     try:
-        print("!")
         s = socket.socket()
-        print("!")
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind(('', int(port)))
-        print("!")
         s.listen(5)
         request_set = loadData('port_dat/port_' + str(port) + '.dat')
         print("Server started for port " + str(port))
@@ -63,10 +62,9 @@ def createCandyPot(port):
         try:
             while True:
                 req_id = newRequestID(port)
-                print("!")
                 pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
                 p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print","-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
-                # p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"))
+                #p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print ", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.DEVNULL, stderr=sub.STDOUT)
 
                 c, addr = s.accept()
 
@@ -122,12 +120,16 @@ def createCandyPot(port):
                 negativeUpdateResponseScore(port)
         except KeyboardInterrupt:
             print("Program interrupted, storing data and exiting.")
-
-        storeData(request_set, 'port_dat/port_' + str(port) + '.dat')
+            s.close()
+            interrupt = True
+            storeData(request_set, 'port_dat/port_' + str(port) + '.dat')
     except:
-        print("Error with CandyPot at port " + str(port))
-        time.sleep(50)
-        createCandyPot(port)
+        if interrupt:
+            sys.exit(1)
+        else:
+            print("Error with CandyPot at port " + str(port))
+            time.sleep(50)
+            createCandyPot(port)
 
 def createAllCandyPot():
     allowed_ports = ["80", "81", "82", "88", "443", "7547", "8080", "8081", "9999"]
@@ -136,7 +138,8 @@ def createAllCandyPot():
         t.start()
 
 def main():
-    port = int(input("Select a Port (digit all for select all the ports): "))
+    #port = str(input("Select a Port (digit all for select all the ports): "))
+    port = str(sys.argv[1])
     portSelection(port)
 
 if __name__ == "__main__":
