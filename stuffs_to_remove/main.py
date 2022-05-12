@@ -1,12 +1,19 @@
 import csv
 import pandas as pd
 from datetime import datetime
-
 from scapy.all import *
+import subprocess as sub
 
+port=80
+req_id="REQ_178_P80"
+snort_conf_path = ("/etc/snort/snort.conf")
+pcap_path = ("/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + str(req_id) + ".pcap")
+p = sub.Popen(("sudo", "snort", "-c", str(snort_conf_path), "-A", "console", "-q", "-r", str(pcap_path)), stdout=sub.PIPE)
 
-
-
+alert_check = False
+for alert in p.stdout:
+    alert_check = True
+    print("**************** Alert Found *********************")
 
 
 """
