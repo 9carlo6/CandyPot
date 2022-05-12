@@ -25,35 +25,37 @@ def randomResponse(port, socket):
     return res_id
 
 def portSelection(port):
-    try:
-        if '80' == port:
-            createCandyPot(port)
-        elif '81' == port:
-            createCandyPot(port)
-        elif '82' == port:
-            createCandyPot(port)
-        elif '88' == port:
-            createCandyPot(port)
-        elif '443' == port:
-            createCandyPot(port)
-        elif '7547' == port:
-            createCandyPot(port)
-        elif '8080' == port:
-            createCandyPot(port)
-        elif '8081' == port:
-            createCandyPot(port)
-        elif '9999' == port:
-            createCandyPot(port)
-        elif 'all' == port:
-            createAllCandyPot()
-    except:
+    if '80' == str(port):
+        createCandyPot(port)
+    elif '81' == str(port):
+        createCandyPot(port)
+    elif '82' == str(port):
+        createCandyPot(port)
+    elif '88' == str(port):
+        createCandyPot(port)
+    elif '443' == str(port):
+        createCandyPot(port)
+    elif '7547' == str(port):
+        createCandyPot(port)
+    elif '8080' == str(port):
+        createCandyPot(port)
+    elif '8081' == str(port):
+        createCandyPot(port)
+    elif '9999' == str(port):
+        createCandyPot(port)
+    elif 'all' == str(port):
+        createAllCandyPot()
+    else:
         print("\nException: The port is invalid")
         sys.exit(1)
 
 def createCandyPot(port):
     try:
+        print("!")
         s = socket.socket()
+        print("!")
         s.bind(('', int(port)))
+        print("!")
         s.listen(5)
         request_set = loadData('port_dat/port_' + str(port) + '.dat')
         print("Server started for port " + str(port))
@@ -61,14 +63,14 @@ def createCandyPot(port):
         try:
             while True:
                 req_id = newRequestID(port)
+                print("!")
                 pcap_path = "/home/CandyPot/requests/port_" + str(port) + "_requests_pcap/" + req_id + ".pcap"
-                p = sub.Popen((
-                              "sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print",
-                              "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
+                p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "--print","-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"), stdout=sub.PIPE)
                 # p = sub.Popen(("sudo", "tcpdump", "port", str(port), "and", "(tcp[tcpflags] & tcp-push != 0)", "-Q", "in", "-w", pcap_path, "-Z", "root", "-c", "1"))
 
                 c, addr = s.accept()
-                print('\n----------Got connection from' + addr + "----------")
+
+                print('\n----------Got connection from' + str(addr) + '----------')
 
                 # To find out if a new session has been started with this address
                 check_session, ses_id = checkOpenSession(port, addr)
@@ -123,7 +125,8 @@ def createCandyPot(port):
 
         storeData(request_set, 'port_dat/port_' + str(port) + '.dat')
     except:
-        print("CandyPot error at port " + str(port))
+        print("Error with CandyPot at port " + str(port))
+        time.sleep(50)
         createCandyPot(port)
 
 def createAllCandyPot():
@@ -133,8 +136,8 @@ def createAllCandyPot():
         t.start()
 
 def main():
-    port = str(input("Select a Port (digit all for select all the ports): "))
-    portSelection(str(port))
+    port = int(input("Select a Port (digit all for select all the ports): "))
+    portSelection(port)
 
 if __name__ == "__main__":
     main()
