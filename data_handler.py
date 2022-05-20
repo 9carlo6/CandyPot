@@ -144,11 +144,34 @@ def loadRandomResponse(port):
         reader = csv.reader(f)
         res_lis = list(reader)
         res_lis.pop(0)
-        res_id = random.choice(res_lis)
+        random_response = random.choice(res_lis)
         f.close()
-        return res_id
+        return random_response
     except:
         print("Exception with load a random response: port=" + str(port))
+        sys.exit(1)
+
+# To load a the best response (id)
+def loadBestResponse(port):
+    try:
+        res_path = filePathCreation(str(port), "res")
+        df = pd.read_csv(res_path)
+        res_lis = list(df.ID[df.SCORE == df.SCORE.max()])
+        # if there are more answers, the best one is chosen
+        res_id = random.choice(res_lis)
+        df.to_csv(res_path, index=False)
+
+        f = open(res_path, 'r', newline='\n')
+        reader = csv.reader(f)
+        res_lis = list(reader)
+        res_lis.pop(0)
+        f.close()
+        for r in res_lis:
+            if str(r[0]) == str(res_id):
+                return r
+        return None
+    except:
+        print("Exception with load the best response: port=" + str(port))
         sys.exit(1)
 
 # To check if responses list for this port is empty

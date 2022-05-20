@@ -24,6 +24,18 @@ def randomResponse(port, socket):
         socket.send(r[2].encode("utf-8"))
     return res_id
 
+def bestResponse(port, socket):
+    print('RESPONSE:')
+    r = loadBestResponse(port)
+    print(str(r[0]) + ": " + str(r[2]))
+    res_id = r[0]
+    if "b'" in r[2]:
+        filtered_response = r[2].split("b'")[1].split("'")[0]
+        socket.send(filtered_response.encode("utf-8"))
+    else:
+        socket.send(r[2].encode("utf-8"))
+    return res_id
+
 def portSelection(port):
     if '80' == str(port):
         createCandyPot(port)
@@ -58,7 +70,7 @@ def createCandyPot(port):
         s.listen(5)
         request_set = loadData('port_dat/port_' + str(port) + '.dat')
         print("Server started for port " + str(port))
-        random_response = True
+        random_response = False
         try:
             while True:
                 req_id = newRequestID(port)
@@ -107,8 +119,9 @@ def createCandyPot(port):
                     c.send(b'404')
                 # Q-Learning approach
                 else:
-                    print('Thank you for connecting')
-                    c.send(b'Thank you for connecting')
+                    res_id = bestResponse(port, c)
+                    #print('Thank you for connecting')
+                    #c.send(b'Thank you for connecting')
 
                 # To add a new session or update an existing session
                 storeSession(ses_id, addr, req_id, res_id, port)
