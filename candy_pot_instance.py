@@ -107,21 +107,19 @@ def createCandyPot(port):
 
                 # To check if responses list for this port is empty
                 response_exists = checkResponsesExistence(port)
-
+                
                 # Random response
                 if random_response and response_exists:
                     res_id = randomResponse(port, c)
-                # If the attacker has already made an equal request
+                # Q-Learning approach
                 elif response_exists and not random_response:
-                    print('Not implemented')
+                    res_id = bestResponse(port, c)
                 elif not response_exists:
                     print('No answers have been collected yet')
                     c.send(b'404')
-                # Q-Learning approach
                 else:
-                    res_id = bestResponse(port, c)
-                    #print('Thank you for connecting')
-                    #c.send(b'Thank you for connecting')
+                    print('Thank you for connecting')
+                    c.send(b'Thank you for connecting')
 
                 # To add a new session or update an existing session
                 storeSession(ses_id, addr, req_id, res_id, port)
